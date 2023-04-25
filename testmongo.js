@@ -100,6 +100,33 @@ app.get("/rest/ticket/:id", function (req, res) {
   run().catch(console.dir);
 });
 
+app.get("/rest/ticket/xml/:id", function (req, res) {
+  const client = new MongoClient(uri);
+
+  const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
+
+  async function run() {
+    try {
+      const database = client.db("CMPS415");
+      const tickets = database.collection("Ticket");
+      const searchId = req.params.id;
+
+      if (searchId < 1) {
+        return res.send("Invalid ID");
+      }
+      const queryInt = { _id: parseInt(searchId) };
+      const ticket = await tickets.findOne(queryInt);
+      if (ticket == null) {
+        return res.send("Ticket not found");
+      }
+      res.send("Found this: " + XMLDocument.stringify(ticket));
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+});
+
 //Get All Tickets
 app.get("/rest/list", function (req, res) {
   console.log("Looking for: All Tickets");
@@ -137,8 +164,6 @@ app.post("/rest/newticket/", function (req, res) {
       newTicket._id = parseInt(newTicket._id);
 
       //Can't input a time stamp but the Phase I doc requires it be a postable field. Therefore check if the time stamp is at least an integer
-
-
 
       await ticket.insertOne(newTicket);
       let result = newTicket;
