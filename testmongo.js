@@ -1,3 +1,5 @@
+import { json2xml } from "xml-js";
+
 const { MongoClient } = require("mongodb");
 
 // The uri string must be the connection string for the database (obtained on Atlas).
@@ -119,7 +121,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      res.send("Found this: " + XMLSerializer(ticket));
+      res.send("Found this: " + json2xml(ticket, { compact: true, spaces: 4 }));
     } finally {
       await client.close();
     }
