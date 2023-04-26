@@ -1,4 +1,4 @@
-import { json2xml } from "xml-js";
+const { json2xml } = require("xml-js");
 
 const { MongoClient } = require("mongodb");
 
