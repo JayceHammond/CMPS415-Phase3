@@ -119,7 +119,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      res.send("Found this: " + XMLDocument.stringify(ticket));
+      res.send("Found this: " + XMLSerializer(ticket));
     } finally {
       await client.close();
     }
