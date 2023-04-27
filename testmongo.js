@@ -106,6 +106,8 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
   const client = new MongoClient(uri);
 
   const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
+  const adaptee = new JsonAdaptee();
+  const adapter = new Adapter(adaptee);
 
   async function run() {
     try {
@@ -121,7 +123,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      res.send("Found this: " + json2xml(ticket, { compact: true, spaces: 4 }));
+      res.send("Found this: " + Adapter.request());
     } finally {
       await client.close();
     }

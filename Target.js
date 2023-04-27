@@ -1,0 +1,3 @@
+class Target {
+  request(JSON) {}
+}
