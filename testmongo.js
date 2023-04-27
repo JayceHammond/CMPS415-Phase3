@@ -1,7 +1,3 @@
-require("Adaptor.js");
-require("JsonAdaptee.js");
-require("Target.js");
-
 const { json2xml } = require("xml-js");
 
 const { MongoClient } = require("mongodb");
