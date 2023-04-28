@@ -1,3 +1,3 @@
-class Target {
+export class Target {
   request(JSON) {}
 }
