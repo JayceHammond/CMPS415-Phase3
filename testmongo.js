@@ -1,7 +1,3 @@
-require("Adaptor.js");
-require("JsonAdaptee.js");
-require("Target.js");
-
 const { json2xml } = require("xml-js");
 
 const { MongoClient } = require("mongodb");
@@ -110,8 +106,6 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
   const client = new MongoClient(uri);
 
   const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
-  const adaptee = new JsonAdaptee();
-  const adaptor = new Adapter(adaptee);
 
   async function run() {
     try {
@@ -127,7 +121,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      res.send("Found this: " + adaptor.request());
+      res.send("Found this: " + json2xml(ticket, {compact: true, spaces: 4}));
     } finally {
       await client.close();
     }
