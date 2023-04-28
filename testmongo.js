@@ -127,7 +127,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       }
       const xmlTicket = adaptor.request(JSON.stringify(ticket));
       console.log(xmlTicket);
-      console.log(json2xml(ticket));
+      console.log(JSON.stringify(ticket));
       res.send("Found this: " + xmlTicket);
     } finally {
       await client.close();
