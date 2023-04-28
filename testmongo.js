@@ -251,18 +251,18 @@ class Target{
   request(JSON){}
 }
 
+class JsonAdaptee{
+  convertToXML(JSON){
+    json2xml(JSON, {compact:true, spaces: 4})
+  }
+}
+
 class Adapter extends Target{
   constructor(adaptee){
     super();
     this.adaptee = adaptee;
   }
   request(JSON){
-    adaptee.convertToXml(JSON);
-  }
-}
-
-class JsonAdaptee{
-  convertToXML(JSON){
-    json2xml(JSON, {compact:true, spaces: 4})
+    this.adaptee.convertToXml(JSON);
   }
 }
