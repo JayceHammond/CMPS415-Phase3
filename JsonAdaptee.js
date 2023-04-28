@@ -1,3 +1,7 @@
+require("Adaptor.js");
+require("JsonAdaptee.js");
+require("Target.js");
+
 class JsonAdaptee {
   constructor() {
     super();
