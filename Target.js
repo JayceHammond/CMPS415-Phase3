@@ -1,3 +1,3 @@
-module.exports = class Target {
+export class Target {
   request(JSON) {}
 }

@@ -1,6 +1,7 @@
 const { json2xml } = require("xml-js");
-var ADAPTER = require('Adaptor.js')
-var JSON_ADAPTEE = require('JsonAdaptee.js');
+import { Adapter } from "Adaptor.js";
+import { JsonAdaptee } from "JsonAdaptee.js";
+import { Target } from "Target.js";
 
 const { MongoClient } = require("mongodb");
 
@@ -108,8 +109,8 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
   const client = new MongoClient(uri);
 
   const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
-  const adaptee = new JSON_ADAPTEE();
-  const adaptor = new ADAPTER(adaptee);
+  //const adaptee = new JsonAdaptee();
+  const adaptor = new Adapter(new JsonAdaptee());
 
   async function run() {
     try {
