@@ -126,6 +126,8 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
         return res.send("Ticket not found");
       }
       const xmlTicket = adaptor.request(ticket);
+      console.log(xmlTicket);
+      console.log(json2xml(ticket))
       res.send("Found this: " + xmlTicket);
     } finally {
       await client.close();
@@ -254,7 +256,7 @@ class Target{
 
 class JsonAdaptee{
   convertToXML(JSON){
-    json2xml(JSON, {compact:true, spaces: 4})
+    json2xml(JSON, {compact: true, spaces: 4})
   }
 }
 
@@ -264,7 +266,6 @@ class Adapter extends Target{
     this.adaptee = adaptee;
   }
   request(JSON){
-    const xml = this.adaptee.convertToXML(JSON);
-    return xml;
+    return this.adaptee.convertToXML(JSON);
   }
 }
