@@ -102,39 +102,6 @@ app.get("/rest/ticket/:id", function (req, res) {
   run().catch(console.dir);
 });
 
-app.get("/rest/ticket/xml/:id", function (req, res) {
-  const client = new MongoClient(uri);
-
-  const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
-
-  async function run() {
-    try {
-      const database = client.db("CMPS415");
-      const tickets = database.collection("Ticket");
-      const searchId = req.params.id;
-      
-      const target = new Target();
-      const adaptee = new JsonAdaptee();
-      const adaptor = new Adapter(adaptee);
-
-      if (searchId < 1) {
-        return res.send("Invalid ID");
-      }
-      const queryInt = { _id: parseInt(searchId) };
-      const ticket = await tickets.findOne(queryInt);
-      if (ticket == null) {
-        return res.send("Ticket not found");
-      }
-      const xmlTicket = adaptor.request(JSON.stringify(ticket));
-      console.log(json2xml(ticket, {compact: true, spaces: 4}));
-      res.send("Found this: " + xmlTicket);
-    } finally {
-      await client.close();
-    }
-  }
-  run().catch(console.dir);
-});
-
 //Get All Tickets
 app.get("/rest/list", function (req, res) {
   console.log("Looking for: All Tickets");
@@ -254,8 +221,8 @@ class Target{
 }
 
 class JsonAdaptee{
-  convertToXML(JSON){
-    json2xml(JSON, {compact: true, spaces: 4})
+  convertToXML(ticket){
+    return json2xml(ticket, {compact: true, spaces: 4})
   }
 }
 
@@ -264,7 +231,43 @@ class Adapter extends Target{
     super();
     this.adaptee = adaptee;
   }
-  request(JSON){
-    return this.adaptee.convertToXML(JSON);
+  request(ticket){
+    return this.adaptee.convertToXML(ticket);
   }
 }
+
+
+app.get("/rest/ticket/xml/:id", function (req, res) {
+  const client = new MongoClient(uri);
+
+  const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
+
+  async function run() {
+    try {
+      const database = client.db("CMPS415");
+      const tickets = database.collection("Ticket");
+      const searchId = req.params.id;
+      
+      const target = new Target();
+      const adaptee = new JsonAdaptee();
+      const adaptor = new Adapter(adaptee);
+
+      if (searchId < 1) {
+        return res.send("Invalid ID");
+      }
+      const queryInt = { _id: parseInt(searchId) };
+      const ticket = await tickets.findOne(queryInt);
+      if (ticket == null) {
+        return res.send("Ticket not found");
+      }
+      
+      const xmlTicket = adaptor.request(ticket);
+      const xml = json2xml(ticket, {compact: true, spaces: 4})
+      console.log(xml);
+      res.send("Found this: " + xmlTicket);
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+});
