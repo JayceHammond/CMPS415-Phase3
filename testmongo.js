@@ -112,6 +112,9 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       const database = client.db("CMPS415");
       const tickets = database.collection("Ticket");
       const searchId = req.params.id;
+      
+      const adaptee = new JsonAdaptee();
+      const adaptor = new Adapter(adaptee);
 
       if (searchId < 1) {
         return res.send("Invalid ID");
@@ -121,7 +124,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      res.send("Found this: " + json2xml(ticket, {compact: true, spaces: 4}));
+      res.send("Found this: " + adaptor.request(ticket));
     } finally {
       await client.close();
     }
@@ -223,6 +226,7 @@ app.delete("/rest/ticket/delete/:id", function (req, res) {
       const database = client.db("CMPS415");
       const ticket = database.collection("Ticket");
       const searchId = req.params.id;
+
       if (searchId < 0) {
         res.send("Id must be greater than 0");
       }
@@ -240,3 +244,24 @@ app.delete("/rest/ticket/delete/:id", function (req, res) {
   }
   run().catch(console.dir);
 });
+
+
+class Adapter extends Target{
+  constructor(adaptee){
+    super();
+    this.adaptee = adaptee;
+  }
+  request(JSON){
+    this.adaptee.convertToXml(JSON);
+  }
+}
+
+class JsonAdaptee{
+  convertToXML(JSON){
+    json2xml(JSON, {compact:true, spaces: 4})
+  }
+}
+
+class Target{
+  request(JSON){}
+}
