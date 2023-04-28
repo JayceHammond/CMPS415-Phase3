@@ -1,7 +1,7 @@
 const { json2xml } = require("xml-js");
-import { Adapter } from "Adaptor.js";
-import { JsonAdaptee } from "JsonAdaptee.js";
-import { Target } from "Target.js";
+import { Adapter } from "./Adaptor";
+import { JsonAdaptee } from "./JsonAdaptee";
+import { Target } from "./Target";
 
 const { MongoClient } = require("mongodb");
 
