@@ -106,8 +106,8 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
   const client = new MongoClient(uri);
 
   const searchKey = "{ Ticket ID : '" + parseInt(req.params.id) + "'}";
-  //const adaptee = new JsonAdaptee();
-  const adaptor = new Adapter(new JsonAdaptee());
+  const adaptee = new JsonAdaptee();
+  const adaptor = new Adapter(adaptee);
 
   async function run() {
     try {
