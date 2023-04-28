@@ -263,6 +263,6 @@ class Adapter extends Target{
     this.adaptee = adaptee;
   }
   request(JSON){
-    this.adaptee.convertToXml(JSON);
+    this.adaptee.convertToXML(JSON);
   }
 }
