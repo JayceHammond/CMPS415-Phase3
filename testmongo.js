@@ -113,6 +113,7 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       const tickets = database.collection("Ticket");
       const searchId = req.params.id;
       
+      const target = new Target();
       const adaptee = new JsonAdaptee();
       const adaptor = new Adapter(adaptee);
 
@@ -246,6 +247,10 @@ app.delete("/rest/ticket/delete/:id", function (req, res) {
 });
 
 
+class Target{
+  request(JSON){}
+}
+
 class Adapter extends Target{
   constructor(adaptee){
     super();
@@ -260,8 +265,4 @@ class JsonAdaptee{
   convertToXML(JSON){
     json2xml(JSON, {compact:true, spaces: 4})
   }
-}
-
-class Target{
-  request(JSON){}
 }
