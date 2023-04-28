@@ -1,4 +1,4 @@
-export class Adapter extends Target {
+class Adapter extends Target {
   constructor(adaptee) {
     super();
     this.adaptee = adaptee;
