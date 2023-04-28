@@ -125,9 +125,9 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      const xmlTicket = adaptor.request(ticket);
+      const xmlTicket = adaptor.request(JSON.stringify(ticket));
       console.log(xmlTicket);
-      console.log(json2xml(ticket))
+      console.log(json2xml(ticket));
       res.send("Found this: " + xmlTicket);
     } finally {
       await client.close();
