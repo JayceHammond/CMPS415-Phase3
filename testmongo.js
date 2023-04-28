@@ -125,7 +125,8 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       if (ticket == null) {
         return res.send("Ticket not found");
       }
-      res.send("Found this: " + adaptor.request(ticket));
+      const xmlTicket = adaptor.request(ticket);
+      res.send("Found this: " + xmlTicket);
     } finally {
       await client.close();
     }
@@ -263,6 +264,7 @@ class Adapter extends Target{
     this.adaptee = adaptee;
   }
   request(JSON){
-    this.adaptee.convertToXML(JSON);
+    const xml = this.adaptee.convertToXML(JSON);
+    return xml;
   }
 }
