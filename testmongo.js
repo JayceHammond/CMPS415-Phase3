@@ -1,23 +1,23 @@
-import { json2xml } from "xml-js";
-import ADAPTER from 'Adaptor.js';
-import JSON_ADAPTEE from 'JsonAdaptee.js';
+const { json2xml } = require("xml-js");
+var ADAPTER = require('Adaptor.js')
+var JSON_ADAPTEE = require('JsonAdaptee.js');
 
-import { MongoClient } from "mongodb";
+const { MongoClient } = require("mongodb");
 
 // The uri string must be the connection string for the database (obtained on Atlas).
 const uri =
   "mongodb+srv://JayceDB:yhlnSd5eupLkZ55N@cmps415.rfhvwh1.mongodb.net/?retryWrites=true&w=majority";
 
 // --- This is the standard stuff to get it to work on the browser
-import express, { json, urlencoded } from "express";
+const express = require("express");
 const app = express();
 const port = 3000;
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
 
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // routes will go here
 
