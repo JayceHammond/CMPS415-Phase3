@@ -1,6 +1,7 @@
 {
   "name": "415Project",
   "version": "1.0.0",
+  "type": "module",
   "description": "Jds 415 Project",
   "main": "testmongo.js",
   "repository": "https://github.com/JayceHammond/CMPS415-Phase3",
