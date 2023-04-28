@@ -126,8 +126,8 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
         return res.send("Ticket not found");
       }
       const xmlTicket = adaptor.request(JSON.stringify(ticket));
-      console.log(xmlTicket);
-      res.send("Found this: " + json2xml(ticket, {compact: true, spaces: 4}));
+      console.log(json2xml(ticket, {compact: true, spaces: 4}));
+      res.send("Found this: " + xmlTicket);
     } finally {
       await client.close();
     }
