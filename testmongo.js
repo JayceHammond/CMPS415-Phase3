@@ -1,4 +1,5 @@
 const { json2xml } = require("xml-js");
+require("Adaptor.js");
 
 const { MongoClient } = require("mongodb");
 
