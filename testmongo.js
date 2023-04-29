@@ -1,5 +1,6 @@
 const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
+const xmlAppParser = require("express-xml-bodyparser");
 let xmlParser = require('xml2json');
 
 const { MongoClient } = require("mongodb");
@@ -18,6 +19,7 @@ console.log("Server started at http://localhost:" + port);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(xmlAppParser());
 
 // routes will go here
 
