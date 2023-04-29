@@ -1,6 +1,6 @@
 const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
-const {xmlparser} = require("express-xml-bodyparser");
+const xmlparser = require("express-xml-bodyparser");
 
 const { MongoClient } = require("mongodb");
 
