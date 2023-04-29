@@ -293,12 +293,14 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptee = new XmlAdaptee();
       const adaptor = new Adapter(adaptee);
 
-      const xml = req.body;
+      let xml = new XMLDocument;
+      xml = req.body;
       //const jsonTicket = adaptor.request(xml);
 
       //await ticket.updateOne(query, jsonTicket);
       let result = await ticket.findOne(query);
-      console.log("THIS IS THE REQ.BODY" + req.body);
+      console.log("THIS IS THE XML DOC" + xml);
+      console.log("THIS IS THE REQ.BODY" + JSON.stringify(req.body));
       res.send(result).status(200);
     } finally {
       await client.close();
