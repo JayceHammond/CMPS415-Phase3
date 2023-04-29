@@ -2,6 +2,7 @@ const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
 const xmlAppParser = require("express-xml-bodyparser");
 let xmlParser = require('xml2json');
+let parseString = require('xml2js').parseString;
 
 const { MongoClient } = require("mongodb");
 
@@ -232,7 +233,10 @@ class JsonAdaptee{
 class XmlAdaptee{
   convertXML(xml){
     //return xmlParser.toJson(xml);
-    return JSON.parse(xmlParser.toJson(xml));
+    parseString(xml, function(err, res){
+      return JSON.parse(xmlParser.toJson(res));
+    })
+
   }
 }
 
