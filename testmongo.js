@@ -298,7 +298,7 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
 
       //await ticket.updateOne(query, jsonTicket);
       let result = await ticket.findOne(query);
-      console.log(req.body);
+      console.log("THIS IS THE REQ.BODY" + req.body);
       res.send(result).status(200);
     } finally {
       await client.close();
