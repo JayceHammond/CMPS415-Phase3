@@ -295,7 +295,10 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptor = new Adapter(adaptee);
 
       let xml = req.body;
-      let jsonTicket = adaptor.request(xml);
+      let jsonTicket = {
+        $set:
+          adaptor.request(xml)  
+      }
       
       await ticket.updateOne(query, jsonTicket);
 
