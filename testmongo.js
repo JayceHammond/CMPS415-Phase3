@@ -231,7 +231,8 @@ class JsonAdaptee{
 }
 class XmlAdaptee{
   convertXML(xml){
-    return xmlParser.toJson(xml);
+    //return xmlParser.toJson(xml);
+    return JSON.parse(JSON.stringify(xml));
   }
 }
 
@@ -294,11 +295,10 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptor = new Adapter(adaptee);
 
       let xml = req.body;
-      //let jsonTicket = adaptor.request(xml);
+      let jsonTicket = adaptor.request(xml);
       
-      //await ticket.updateOne(query, jsonTicket);
-      console.log("STRINGIFIED TICKET: " + JSON.stringify(xml));
-      console.log("ACTUAL JSON TICKET: " + JSON.parse(JSON.stringify(xml)) + "\n THIS IS THE TYPE: " + typeof(JSON.parse(JSON.stringify(xml))))
+      await ticket.updateOne(query, jsonTicket);
+
       let result = await ticket.findOne(query);
 
       res.send(result).status(200);
