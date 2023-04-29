@@ -19,7 +19,7 @@ console.log("Server started at http://localhost:" + port);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(xmlAppParser());
+//app.use(xmlAppParser());
 
 // routes will go here
 
