@@ -219,18 +219,17 @@ app.delete("/rest/ticket/delete/:id", function (req, res) {
 
 
 class Target{
-  request(doc){}
+  request(JSON){}
 }
-/*
+
 class JsonAdaptee{
   convertXML(ticket){
     return json2xml(ticket, {compact: true, spaces: 4})
   }
 }
-*/
 class XmlAdaptee{
   convertXML(xml){
-    return xmlParser.toJson(xml.stringify);
+    return xmlParser.toJson(xml);
   }
 }
 
