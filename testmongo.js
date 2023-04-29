@@ -292,7 +292,7 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptee = new XmlAdaptee();
       const adaptor = new Adapter(adaptee);
 
-      const xml = req.body;
+      const xml = req.body.stringify;
       const jsonTicket = adaptor.request(xml);
       console.log(xml);
 
