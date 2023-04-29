@@ -231,7 +231,8 @@ class JsonAdaptee{
 }
 class XmlAdaptee{
   convertXML(xml){
-    return xmlParser.toJson(xml);
+    //return xmlParser.toJson(xml);
+    return JSON.stringify(xml);
   }
 }
 
@@ -293,12 +294,12 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptee = new XmlAdaptee();
       const adaptor = new Adapter(adaptee);
 
-      //let xml = req.body;
-      //const jsonTicket = adaptor.request(xml);
-
-      //await ticket.updateOne(query, jsonTicket);
+      let xml = req.body;
+      let jsonTicket = adaptor.request(xml);
+      
+      await ticket.updateOne(query, jsonTicket);
       let result = await ticket.findOne(query);
-      console.log("THIS IS THE REQ.BODY" + JSON.stringify(req.body));
+
       res.send(result).status(200);
     } finally {
       await client.close();
