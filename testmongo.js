@@ -295,11 +295,10 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
 
       const xml = req.body;
       //const jsonTicket = adaptor.request(xml);
-      console.log(xml);
 
       //await ticket.updateOne(query, jsonTicket);
       let result = await ticket.findOne(query);
-      console.log(ticket);
+      console.log(req.body);
       res.send(result).status(200);
     } finally {
       await client.close();
