@@ -233,10 +233,8 @@ class JsonAdaptee{
 class XmlAdaptee{
   convertXML(xml){
     //return xmlParser.toJson(xml);
-    parseString(xml, function(err, res){
-      return xmlParser.toJson(res);
-    })
-
+    var xmlText = new XMLSerializer().serializeToString(xml);
+    return xmlParser.toJson(xmlText);
   }
 }
 
