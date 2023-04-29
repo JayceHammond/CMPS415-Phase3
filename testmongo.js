@@ -234,7 +234,7 @@ class XmlAdaptee{
   convertXML(xml){
     //return xmlParser.toJson(xml);
     parseString(xml, function(err, res){
-      return JSON.parse(xmlParser.toJson(res));
+      return xmlParser.toJson(res);
     })
 
   }
