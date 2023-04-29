@@ -1,6 +1,6 @@
 const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
-const xmlparser = require("express-xml-bodyparser");
+let xmlParser = require('xml2json');
 
 const { MongoClient } = require("mongodb");
 
@@ -18,7 +18,7 @@ console.log("Server started at http://localhost:" + port);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(xmlparser());
+app.use(xmlParser());
 
 // routes will go here
 
@@ -231,7 +231,7 @@ class JsonAdaptee{
 
 class XmlAdaptee{
   convertXML(xml){
-    return xml2json(xml);
+    return xmlParser.toJson(xml);
   }
 }
 
