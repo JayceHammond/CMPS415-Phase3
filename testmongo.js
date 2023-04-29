@@ -2,7 +2,6 @@ const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
 const xmlAppParser = require("express-xml-bodyparser");
 let xmlParser = require('xml2json');
-let parseString = require('xml2js').parseString;
 
 const { MongoClient } = require("mongodb");
 
@@ -295,7 +294,7 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptor = new Adapter(adaptee);
 
       let xml = req.body;
-      let jsonTicket = adaptor.request(xml);
+      //let jsonTicket = adaptor.request(xml);
       
       //await ticket.updateOne(query, jsonTicket);
       console.log("STRINGIFIED TICKET: " + JSON.stringify(xml));
