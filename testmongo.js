@@ -230,7 +230,7 @@ class JsonAdaptee{
 */
 class XmlAdaptee{
   convertXML(xml){
-    return xmlParser.toJson(xml);
+    return xmlParser.toJson(xml.stringify);
   }
 }
 
@@ -293,7 +293,7 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptor = new Adapter(adaptee);
 
       const xml = req.body;
-      const jsonTicket = adaptor.request(xml.stringify);
+      const jsonTicket = adaptor.request(xml);
       console.log(xml);
 
       await ticket.updateOne(query, jsonTicket);
