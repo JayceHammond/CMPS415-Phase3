@@ -232,7 +232,7 @@ class JsonAdaptee{
 class XmlAdaptee{
   convertXML(xml){
     //return xmlParser.toJson(xml);
-    return JSON.stringify(xml);
+    return JSON.parse(xmlParser.toJson(xml));
   }
 }
 
