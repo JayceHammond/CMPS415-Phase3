@@ -2,7 +2,7 @@ const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
 const xmlAppParser = require("express-xml-bodyparser");
 let xmlParser = require('xml2json');
-let stringify = require('xml-stringify');
+import stringify from 'xml-stringify';
 
 const { MongoClient } = require("mongodb");
 
