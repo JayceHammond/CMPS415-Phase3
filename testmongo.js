@@ -232,9 +232,7 @@ class JsonAdaptee{
 }
 class XmlAdaptee{
   convertXML(xml){
-    //return xmlParser.toJson(xml);
-    var xmlText = new XMLSerializer().serializeToString(xml);
-    return xmlParser.toJson(xmlText);
+    return xmlParser.toJson(xml);
   }
 }
 
@@ -299,7 +297,9 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       let xml = req.body;
       let jsonTicket = adaptor.request(xml);
       
-      await ticket.updateOne(query, jsonTicket);
+      //await ticket.updateOne(query, jsonTicket);
+      console.log("STRINGIFIED TICKET: " + JSON.stringify(xml));
+      console.log("ACTUAL JSON TICKET: " + JSON.parse(JSON.stringify(xml)) + "\n THIS IS THE TYPE: " + typeof(JSON.parse(JSON.stringify(xml))))
       let result = await ticket.findOne(query);
 
       res.send(result).status(200);
