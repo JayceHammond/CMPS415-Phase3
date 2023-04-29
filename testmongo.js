@@ -1,4 +1,5 @@
 const { json2xml } = require("xml-js");
+const {xml2json} = require("xml-js");
 
 const { MongoClient } = require("mongodb");
 
