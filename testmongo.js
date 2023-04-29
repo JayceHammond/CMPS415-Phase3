@@ -187,7 +187,7 @@ app.patch("/rest/ticket/patch/:id", function (req, res) {
   run().catch(console.dir);
 });
 
-//Update Endpoint
+
 app.delete("/rest/ticket/delete/:id", function (req, res) {
   const client = new MongoClient(uri);
 
@@ -221,8 +221,14 @@ class Target{
 }
 
 class JsonAdaptee{
-  convertToXML(ticket){
+  convertXML(ticket){
     return json2xml(ticket, {compact: true, spaces: 4})
+  }
+}
+
+class XmlAdaptee{
+  convertXML(xml){
+    return xml2json(xml);
   }
 }
 
@@ -232,7 +238,7 @@ class Adapter extends Target{
     this.adaptee = adaptee;
   }
   request(ticket){
-    return this.adaptee.convertToXML(ticket);
+    return this.adaptee.convertXML(ticket);
   }
 }
 
@@ -262,9 +268,35 @@ app.get("/rest/ticket/xml/:id", function (req, res) {
       }
       
       const xmlTicket = adaptor.request(ticket);
-      const xml = json2xml(ticket, {compact: true, spaces: 4})
-      console.log(xml);
       res.send("Found this: " + xmlTicket);
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+});
+
+app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
+  const client = new MongoClient(uri);
+
+  async function run() {
+    try {
+      const database = client.db("CMPS415");
+      const ticket = database.collection("Ticket");
+      const searchId = req.params.id;
+      const query = { _id: parseInt(searchId) };
+
+      const target = new Target();
+      const adaptee = new XmlAdaptee();
+      const adaptor = new Adapter(adaptee);
+
+      const xml = req.body;
+      const jsonTicket = adaptor.request(xml);
+
+      await ticket.updateOne(query, jsonTicket);
+      let result = await ticket.findOne(query);
+      console.log(ticket);
+      res.send(result).status(200);
     } finally {
       await client.close();
     }
