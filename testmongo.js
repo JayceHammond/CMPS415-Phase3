@@ -2,6 +2,7 @@ const { json2xml } = require("xml-js");
 const {xml2json} = require("xml-js");
 const xmlAppParser = require("express-xml-bodyparser");
 let xmlParser = require('xml2json');
+import stringify from 'xml-stringify';
 
 const { MongoClient } = require("mongodb");
 
@@ -232,7 +233,7 @@ class JsonAdaptee{
 class XmlAdaptee{
   convertXML(xml){
     //return xmlParser.toJson(xml);
-    return JSON.stringify(xml);
+    return xml2json(stringify(xml));
   }
 }
 
@@ -295,9 +296,10 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptor = new Adapter(adaptee);
 
       let xml = req.body;
-      let jsonTicket = adaptor.request(xml);
+      //let jsonTicket = adaptor.request(xml);
       
-      await ticket.updateOne(query, jsonTicket);
+      //await ticket.updateOne(query, jsonTicket);
+      console.log(adaptor.request())
       let result = await ticket.findOne(query);
 
       res.send(result).status(200);
