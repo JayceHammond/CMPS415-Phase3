@@ -219,15 +219,15 @@ app.delete("/rest/ticket/delete/:id", function (req, res) {
 
 
 class Target{
-  request(JSON){}
+  request(doc){}
 }
-
+/*
 class JsonAdaptee{
   convertXML(ticket){
     return json2xml(ticket, {compact: true, spaces: 4})
   }
 }
-
+*/
 class XmlAdaptee{
   convertXML(xml){
     return xmlParser.toJson(xml);
@@ -292,8 +292,8 @@ app.patch("/rest/ticket/xml/patch/:id", function (req, res) {
       const adaptee = new XmlAdaptee();
       const adaptor = new Adapter(adaptee);
 
-      const xml = req.body.stringify;
-      const jsonTicket = adaptor.request(xml);
+      const xml = req.body;
+      const jsonTicket = adaptor.request(xml.stringify);
       console.log(xml);
 
       await ticket.updateOne(query, jsonTicket);
